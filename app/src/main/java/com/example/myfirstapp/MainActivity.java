@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    private Button btnAddInput, btnAddition, btnSubtract, btnDivision, btnMultiply;
+    private Button btnAddInput, btnAddition, btnSubtract, btnDivision, btnMultiply, btnClear;
     private LinearLayout linearLayoutInputs;
     private TextView txtResult;
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             btnSubtract.setOnClickListener(new btnSubtractListener());
             btnDivision.setOnClickListener(new btnDivisionListener());
             btnMultiply.setOnClickListener(new BtnMultiplyListener());
+            btnClear.setOnClickListener(new BtnClearListener());
 
 
     }
@@ -47,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
     private class BtnAddEdtTxt implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            EditText addInputs = new EditText(MainActivity.this);
-            addInputs.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            addInputs.setTextColor(Color.parseColor("#000000"));
-            addInputs.setHint("Please Enter Input");
-            addInputs.setHintTextColor(Color.parseColor("#696969"));
-            addInputs.setTextSize(20);
-            addInputs.setInputType(InputType.TYPE_CLASS_NUMBER);
-            linearLayoutInputs.addView(addInputs);
-            arrEditTexts.add(addInputs);
+            EditText AddEdtTxt = new EditText(MainActivity.this);
+            AddEdtTxt.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            AddEdtTxt.setTextColor(Color.parseColor("#000000"));
+            AddEdtTxt.setHint("Please Enter Input");
+            AddEdtTxt.setHintTextColor(Color.parseColor("#696969"));
+            AddEdtTxt.setTextSize(20);
+            AddEdtTxt.setInputType(InputType.TYPE_CLASS_NUMBER);
+            linearLayoutInputs.addView(AddEdtTxt);
+            arrEditTexts.add(AddEdtTxt);
         }
     }
 
@@ -112,10 +113,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            int sum=sum= Integer.parseInt(arrEditTexts.get(0).getText().toString());
+            double sum=sum= Double.parseDouble(arrEditTexts.get(0).getText().toString());
             for (int i = 1; i < arrEditTexts.size(); i++) {
 
-                sum = sum * Integer.parseInt(arrEditTexts.get(i).getText().toString());
+                sum = sum * Double.parseDouble(arrEditTexts.get(i).getText().toString());
             }
 
             txtResult.setText(sum+"");
@@ -123,14 +124,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class BtnClearListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+
+            EditText removeEdtTxt = new EditText(MainActivity.this);
+            for(int i=0; i<arrEditTexts.size(); i++){
+                linearLayoutInputs.removeView(arrEditTexts.get(i));
+            }
+            arrEditTexts.clear();
+            txtResult.setText("Please Enter Inputs");
+        }
+    }
+
     private void init() {
-        btnAddInput = findViewById(R.id.addInput);
+        btnAddInput = findViewById(R.id.btnAddInput);
         btnAddition = findViewById(R.id.btnAdd);
         btnDivision = findViewById(R.id.btnDivide);
         btnMultiply = findViewById(R.id.btnMultiply);
         btnSubtract = findViewById(R.id.btnSubtract);
-        linearLayoutInputs = findViewById(R.id.Inputs);
+        linearLayoutInputs = findViewById(R.id.containerInputs);
         txtResult = findViewById(R.id.txtResult);
+        btnClear = findViewById(R.id.btnClear);
     }
 }
 
