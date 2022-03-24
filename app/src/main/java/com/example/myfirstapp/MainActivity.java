@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,36 +20,31 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnAddInput, btnAdd, btnSubtract, btnDivide, btnMultiply;
-    private LinearLayout Inputs;
+
+    private Button btnAddInput, btnAddition, btnSubtract, btnDivision, btnMultiply;
+    private LinearLayout linearLayoutInputs;
     private TextView txtResult;
-    private EditText Input1, Input2;
-    int ans;
 
     ArrayList<EditText> arrEditTexts = new ArrayList<>();
-    ArrayList<String> arrValues = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnAddInput = findViewById(R.id.addInput);
-        btnAdd = findViewById(R.id.btnAdd);
-        btnDivide = findViewById(R.id.btnDivide);
-        btnMultiply = findViewById(R.id.btnMultiply);
-        Inputs = findViewById(R.id.Inputs);
-        txtResult = findViewById(R.id.txtResult);
-        Input1 = findViewById(R.id.edtFirstInput);
-        Input2 = findViewById(R.id.edtSecondInput);
+        init();
 
 
-        btnAddInput.setOnClickListener(new AddInputs());
-        btnAdd.setOnClickListener(new btnAdd());
+            btnAddInput.setOnClickListener(new BtnAddEdtTxt());
+            btnAddition.setOnClickListener(new btnAdditionListener());
+            btnSubtract.setOnClickListener(new btnSubtractListener());
+            btnDivision.setOnClickListener(new btnDivisionListener());
+            btnMultiply.setOnClickListener(new BtnMultiplyListener());
+
 
     }
 
-    private class AddInputs implements View.OnClickListener {
+    private class BtnAddEdtTxt implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             EditText addInputs = new EditText(MainActivity.this);
@@ -58,32 +54,83 @@ public class MainActivity extends AppCompatActivity {
             addInputs.setHintTextColor(Color.parseColor("#696969"));
             addInputs.setTextSize(20);
             addInputs.setInputType(InputType.TYPE_CLASS_NUMBER);
-            Inputs.addView(addInputs);
+            linearLayoutInputs.addView(addInputs);
             arrEditTexts.add(addInputs);
         }
     }
 
-    private class btnAdd implements View.OnClickListener {
+    private class btnAdditionListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
 
-            if(arrEditTexts.size() == 0) {
+            int sum=0;
+                for (int i = 0; i < arrEditTexts.size(); i++) {
 
-                double num1 = Double.parseDouble(Input1.getText().toString());
-                double num2 = Double.parseDouble(Input1.getText().toString());
-                double sum = num1 + num2;
-                txtResult.setText(Double.toString(sum));
-
-            }
-            else {
-                int sum = 0
-                for (int i = 0; i <= arrEditTexts.size(); i++) {
-                    sum = sum + Integer.parseInt( arrEditTexts.get(i).getText().toString() );
+                    sum = sum + Integer.parseInt(arrEditTexts.get(i).getText().toString());
                 }
-                txtResult.setText(sum + "");
-            }
+
+            txtResult.setText(sum+"");
+
         }
+    }
+
+    private class btnSubtractListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            int sum= Integer.parseInt(arrEditTexts.get(0).getText().toString());
+            for (int i = 1; i < arrEditTexts.size(); i++) {
+
+                sum = sum - Integer.parseInt(arrEditTexts.get(i).getText().toString());
+            }
+
+            txtResult.setText(sum+"");
+
+        }
+    }
+
+    private class btnDivisionListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            float sum=sum= Float.parseFloat(arrEditTexts.get(0).getText().toString());
+            for (int i = 1; i < arrEditTexts.size(); i++) {
+
+                sum = sum / Float.parseFloat(arrEditTexts.get(i).getText().toString());
+            }
+
+            txtResult.setText(sum+"");
+
+        }
+    }
+
+    private class BtnMultiplyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            int sum=sum= Integer.parseInt(arrEditTexts.get(0).getText().toString());
+            for (int i = 1; i < arrEditTexts.size(); i++) {
+
+                sum = sum * Integer.parseInt(arrEditTexts.get(i).getText().toString());
+            }
+
+            txtResult.setText(sum+"");
+
+        }
+    }
+
+    private void init() {
+        btnAddInput = findViewById(R.id.addInput);
+        btnAddition = findViewById(R.id.btnAdd);
+        btnDivision = findViewById(R.id.btnDivide);
+        btnMultiply = findViewById(R.id.btnMultiply);
+        btnSubtract = findViewById(R.id.btnSubtract);
+        linearLayoutInputs = findViewById(R.id.Inputs);
+        txtResult = findViewById(R.id.txtResult);
     }
 }
 
