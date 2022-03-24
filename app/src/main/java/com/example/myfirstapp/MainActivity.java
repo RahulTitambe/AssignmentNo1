@@ -77,13 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
             else {
-                double extraNum1 = Double.parseDouble(Input1.getText().toString());
-                double extraNum2 = Double.parseDouble(Input1.getText().toString());
-                double extraSum = extraNum1 + extraNum2;
+                int sum = 0
                 for (int i = 0; i <= arrEditTexts.size(); i++) {
-                    arrValues.add(arrEditTexts.get(i).getText().toString());
+                    sum = sum + Integer.parseInt( arrEditTexts.get(i).getText().toString() );
                 }
-                txtResult.setText(Double.toString(extraSum));
+                txtResult.setText(sum + "");
             }
         }
     }
